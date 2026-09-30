@@ -16,6 +16,34 @@ Run the application interactively in a shell:
 docker run -v "$(pwd)":/usr/src -it cpp-container sh
 ```
 
+## MD5 Utility
+
+This project is being developed as a self-contained C++17 implementation of
+the MD5 message-digest algorithm for coursework and learning. MD5 is
+cryptographically broken and must not be used for security-sensitive
+integrity, authentication, or signature verification.
+
+After the implementation is complete, build the program with:
+
+```bash
+g++ -std=c++17 -Wall -Wextra -Wpedantic main.cpp md5.cpp -o app
+```
+
+Use no arguments to hash raw standard-input bytes through EOF, or provide one
+file path to hash that file's raw bytes:
+
+```bash
+printf %s abc | ./app
+./app path/to/input
+```
+
+Successful commands print only the lowercase 32-character MD5 digest and a
+newline. The program accepts at most one argument; file paths are read in
+binary mode, and stdin preserves all bytes, including newlines and NUL bytes.
+
+The complete requirements, test strategy, and implementation plan are in
+[specs/md5.md](specs/md5.md).
+
 ## Structure
 
 * `.agents` - AI agent configurations and skills (in `/skills` subdirectory) for this project
