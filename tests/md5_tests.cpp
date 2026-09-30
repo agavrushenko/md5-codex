@@ -109,6 +109,14 @@ void test_command_line() {
   assert(run_command("./md5 tests/.md5_test_tmp/missing", command_output) != 0);
   assert(!read_file(command_output).empty());
 
+  assert(run_command("./md5 tests/.md5_test_tmp", command_output) != 0);
+  assert(!read_file(command_output).empty());
+
+  if (std::system("command -v md5sum > /dev/null 2>&1") == 0) {
+    assert(run_command("md5sum \"" + binary_input.string() + "\"", command_output) == 0);
+    assert(read_file(command_output).substr(0, 32) == "2a35356f1148b99c7da3553648c10ec6");
+  }
+
   assert(run_command("./md5 one two", command_output) != 0);
   assert(read_file(command_output).find("Usage: ./md5 [file-path]") != std::string::npos);
 

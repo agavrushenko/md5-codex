@@ -53,15 +53,18 @@ Test a file:
 Build unit tests:
 
 ```bash
-g++ -std=c++17 -Wall -Wextra -Wpedantic -I. tests/md5_tests.cpp md5.cpp -o md5_tests
+make md5_tests
 ./md5_tests
 ```
 
 Run all checks:
 
 ```bash
-./test_runner.sh
+make test
 ```
+
+The equivalent shell runner is `./test_runner.sh`. Remove generated executables
+with `make clean`.
 
 ## Project Structure
 
@@ -106,7 +109,8 @@ Tests reside in `tests/md5_tests.cpp` and use an assertion-based standard-librar
 - Padding boundaries: 55, 56, 63, 64, and 65 bytes.
 - Finalization behavior defined by the class interface.
 - Stdin with no appended newline, plus a binary file containing a NUL byte and newline.
-- Missing/unreadable file and multiple-argument CLI errors.
+- Missing-path, unreadable-input, and multiple-argument CLI errors.
+- A binary-file digest cross-check against `md5sum` when that command is available.
 
 The test script must build application and unit-test executables separately, and invoke the application as `./md5` (not `md5`).
 
@@ -129,7 +133,7 @@ Tasks 1–3 are sequential: the CLI depends on the hash interface. Unit tests ca
 
 - `printf %s abc | ./md5` prints `900150983cd24fb0d6963f7d28e17f72`.
 - All RFC 1321 vectors pass.
-- A binary-file digest agrees with `md5sum`, when available.
+- A binary-file digest is compared with `md5sum`, when available.
 - Both modes process raw bytes incrementally and output only the digest.
 - Invalid invocations and file failures return nonzero without a digest.
 - The full test script builds and passes.

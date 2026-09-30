@@ -40,8 +40,11 @@ printf %s abc | ./md5
 Successful commands print only the lowercase 32-character MD5 digest and a
 newline. The program accepts at most one argument; file paths are read in
 binary mode, and stdin preserves all bytes, including newlines and NUL bytes.
+Invalid invocations and file-read failures write a diagnostic to standard error
+and return nonzero; too many arguments print `Usage: ./md5 [file-path]`.
 
-Run the full test suite with `make test` (or `./test_runner.sh`).
+Run the full test suite with `make test` (or `./test_runner.sh`), and remove
+generated executables with `make clean`.
 
 The complete requirements, test strategy, and implementation plan are in
 [specs/md5.md](specs/md5.md).
