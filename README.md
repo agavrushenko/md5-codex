@@ -23,23 +23,25 @@ the MD5 message-digest algorithm for coursework and learning. MD5 is
 cryptographically broken and must not be used for security-sensitive
 integrity, authentication, or signature verification.
 
-After the implementation is complete, build the program with:
+Build the program with:
 
 ```bash
-g++ -std=c++17 -Wall -Wextra -Wpedantic main.cpp md5.cpp -o app
+make
 ```
 
 Use no arguments to hash raw standard-input bytes through EOF, or provide one
 file path to hash that file's raw bytes:
 
 ```bash
-printf %s abc | ./app
-./app path/to/input
+printf %s abc | ./md5
+./md5 path/to/input
 ```
 
 Successful commands print only the lowercase 32-character MD5 digest and a
 newline. The program accepts at most one argument; file paths are read in
 binary mode, and stdin preserves all bytes, including newlines and NUL bytes.
+
+Run the full test suite with `make test` (or `./test_runner.sh`).
 
 The complete requirements, test strategy, and implementation plan are in
 [specs/md5.md](specs/md5.md).
@@ -47,6 +49,6 @@ The complete requirements, test strategy, and implementation plan are in
 ## Structure
 
 * `.agents` - AI agent configurations and skills (in `/skills` subdirectory) for this project
-* `.` - The root directory contains the C++ code for the application as well as necessary scripts
+* `.` - The root directory contains the C++ code, `Makefile`, and necessary scripts
 * `specs` - Specification documentation
 * `tests` - Test code

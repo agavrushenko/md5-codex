@@ -7,13 +7,13 @@ Implement a self-contained C++ program that computes an MD5 digest from either s
 ### User-facing behavior
 
 ```text
-./app              # hash all raw bytes from stdin through EOF
-./app <file-path>  # hash all raw bytes in the named file
+./md5              # hash all raw bytes from stdin through EOF
+./md5 <file-path>  # hash all raw bytes in the named file
 ```
 
 - No arguments hashes every stdin byte through EOF, including whitespace, newlines, and NUL bytes.
 - One argument is a literal file path, read in binary mode.
-- More than one argument writes `Usage: ./app [file-path]` to standard error and returns nonzero.
+- More than one argument writes `Usage: ./md5 [file-path]` to standard error and returns nonzero.
 - An unreadable file reports an error to standard error and returns nonzero.
 - Success output is only a lowercase, 32-character MD5 digest followed by a newline; never a filename.
 - `-` is an ordinary filename, not a stdin alias.
@@ -29,13 +29,13 @@ Implement a self-contained C++ program that computes an MD5 digest from either s
 Build:
 
 ```bash
-g++ -std=c++17 -Wall -Wextra -Wpedantic main.cpp md5.cpp -o app
+make
 ```
 
 Test stdin:
 
 ```bash
-printf %s abc | ./app
+printf %s abc | ./md5
 ```
 
 Expected output:
@@ -47,7 +47,7 @@ Expected output:
 Test a file:
 
 ```bash
-./app path/to/input
+./md5 path/to/input
 ```
 
 Build unit tests:
@@ -69,6 +69,7 @@ Run all checks:
 main.cpp            Command-line parsing, stream selection, and output
 md5.hpp             Public incremental MD5 interface
 md5.cpp             MD5 block processing, padding, and hex encoding
+Makefile            Builds the executable and runs tests
 tests/md5_tests.cpp Algorithm and command-line behavior tests
 test_runner.sh       Builds and runs the application and tests
 specs/md5.md        This specification
@@ -107,7 +108,7 @@ Tests reside in `tests/md5_tests.cpp` and use an assertion-based standard-librar
 - Stdin with no appended newline, plus a binary file containing a NUL byte and newline.
 - Missing/unreadable file and multiple-argument CLI errors.
 
-The test script must build application and unit-test executables separately, and invoke the application as `./app` (not `app`).
+The test script must build application and unit-test executables separately, and invoke the application as `./md5` (not `md5`).
 
 ## Implementation Plan
 
@@ -126,7 +127,7 @@ Tasks 1–3 are sequential: the CLI depends on the hash interface. Unit tests ca
 
 ## Success Criteria
 
-- `printf %s abc | ./app` prints `900150983cd24fb0d6963f7d28e17f72`.
+- `printf %s abc | ./md5` prints `900150983cd24fb0d6963f7d28e17f72`.
 - All RFC 1321 vectors pass.
 - A binary-file digest agrees with `md5sum`, when available.
 - Both modes process raw bytes incrementally and output only the digest.

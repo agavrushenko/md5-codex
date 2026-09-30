@@ -100,17 +100,17 @@ void test_command_line() {
     output.write(bytes.data(), static_cast<std::streamsize>(bytes.size()));
   }
 
-  assert(run_command("printf %s abc | ./app", command_output) == 0);
+  assert(run_command("printf %s abc | ./md5", command_output) == 0);
   assert(read_file(command_output) == "900150983cd24fb0d6963f7d28e17f72\n");
 
-  assert(run_command("./app \"" + binary_input.string() + "\"", command_output) == 0);
+  assert(run_command("./md5 \"" + binary_input.string() + "\"", command_output) == 0);
   assert(read_file(command_output) == "2a35356f1148b99c7da3553648c10ec6\n");
 
-  assert(run_command("./app tests/.md5_test_tmp/missing", command_output) != 0);
+  assert(run_command("./md5 tests/.md5_test_tmp/missing", command_output) != 0);
   assert(!read_file(command_output).empty());
 
-  assert(run_command("./app one two", command_output) != 0);
-  assert(read_file(command_output).find("Usage: ./app [file-path]") != std::string::npos);
+  assert(run_command("./md5 one two", command_output) != 0);
+  assert(read_file(command_output).find("Usage: ./md5 [file-path]") != std::string::npos);
 
   std::filesystem::remove_all(temporary_directory);
 }

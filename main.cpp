@@ -22,7 +22,7 @@ bool hash_stream(std::istream& input, Md5& hash) {
 
 int main(int argc, char* argv[]) {
   if (argc > 2) {
-    std::cerr << "Usage: ./app [file-path]\n";
+    std::cerr << "Usage: ./md5 [file-path]\n";
     return 1;
   }
 

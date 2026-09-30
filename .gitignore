@@ -38,7 +38,7 @@
 *.exe
 *.out
 *.app
-app
+md5
 md5_tests
 
 # Build directories
