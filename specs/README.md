@@ -1,0 +1,1 @@
+This folder contains specifications ("specs") that outline the requirements for new features.
